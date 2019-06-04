@@ -87,11 +87,14 @@ class RemotePaginationTagLib {
 
             // display firststep link when beginstep is not firststep
             if (beginstep > firststep) {
+                def diff=(beginstep-firststep)
                 linkParams.offset = 0
                 writer << remoteLink(linkTagAttrs.clone()) {
                     firststep.toString()
                 }
-                writer << '<span class="step">..</span>'
+                if(diff!=1){
+                    writer << '<span class="step">..</span>'
+                }
             }
 
             // display paginate steps
@@ -106,7 +109,10 @@ class RemotePaginationTagLib {
 
             // display laststep link when endstep is not laststep
             if (endstep < laststep) {
-                writer << '<span class="step">..</span>'
+                def diff=(laststep-endstep)
+                if(diff!=1){
+                    writer << '<span class="step">..</span>'
+                }
                 linkParams.offset = (laststep - 1) * max
                 writer << remoteLink(linkTagAttrs.clone()) { laststep.toString() }
             }
